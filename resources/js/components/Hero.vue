@@ -19,7 +19,7 @@
             </p>
 
             <a
-                href="#proyecto"
+                href="#ventas"
                 class="mt-10 inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full shadow-lg text-lg font-semibold transition duration-300 ease-in-out"
             >
                 Explorar el proyecto <i class="fas fa-leaf ml-3"></i>

@@ -4,8 +4,11 @@
             <!-- Logo y descripción -->
             <div>
                 <div class="flex items-center space-x-2 mb-4">
-                    <i class="fas fa-recycle text-green-600 text-3xl"></i>
-                    <h2 class="text-xl font-bold text-gray-800">UMG Reciclaje</h2>
+                    <img
+                        src="/imagenes/logo1.png"
+                        alt="Logo ECOISA"
+                        class="h-16 w-14 object-contain drop-shadow"
+                    />                    <h2 class="text-xl font-bold text-gray-800">ECOISA</h2>
                 </div>
                 <p class="text-sm text-gray-600">
                     Transformamos residuos en oportunidades sostenibles mediante la innovación y el compromiso estudiantil.
@@ -44,7 +47,7 @@
         </div>
 
         <div class="border-t border-gray-200 mt-10 pt-4 text-center text-sm text-gray-500">
-            © 2024 ECOISA. Todos los derechos reservados.
+            © 2025 ECOISA. Todos los derechos reservados.
         </div>
     </footer>
 </template>

@@ -11,7 +11,11 @@
                     class="flex items-center space-x-3 text-2xl font-bold tracking-wide focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 focus:ring-offset-green-700 rounded"
                     aria-label="Ir al inicio"
                 >
-                    <i class="fas fa-recycle text-white animate-spin-slow drop-shadow-sm" aria-hidden="true"></i>
+                    <img
+                        src="/imagenes/logo1.png"
+                        alt="Logo ECOISA"
+                        class="h-16 w-14 object-contain drop-shadow"
+                    />
                     <span class="text-white">ECOISA</span>
                 </a>
 
