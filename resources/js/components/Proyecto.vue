@@ -198,7 +198,7 @@ export default {
                     description: "Desarrolla herramientas digitales para gestionar y promover el proyecto de reciclaje.",
                     icon: "fa-laptop-code",
                     iconBg: "bg-gradient-to-br from-blue-400 to-indigo-500",
-                    badge: "3 apps desarrolladas",
+                    badge: "Aplicaciones en desarrollo",
                     badgeText: "text-blue-600",
                     badgeBg: "bg-blue-100",
                     bg: "bg-gradient-to-br from-blue-500 to-indigo-600",

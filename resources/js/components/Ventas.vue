@@ -12,10 +12,10 @@
             <header class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-gray-800 font-serif">
                     <i class="fas fa-shopping-bag text-blue-500 mr-3"></i>
-                    Productos Hechos con Material Reciclado
+                    Productos Ecológicos Hechos con Material Reciclado
                 </h2>
                 <p class="text-lg text-gray-600 mt-3 max-w-2xl mx-auto font-sans">
-                    Adquiere productos sostenibles y apoya el ciclo de reciclaje
+                    Descubre artículos prácticos y sostenibles que dan nueva vida a materiales reciclados
                 </p>
             </header>
 
@@ -27,7 +27,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-yellow-700 font-medium">
-                            <span class="font-bold">¡Próximamente más productos!</span> Estamos trabajando en ampliar nuestro catálogo de artículos reciclados.
+                            <span class="font-bold">¡Próximamente más productos!</span> Estamos trabajando en nuevos diseños sostenibles.
                         </p>
                     </div>
                 </div>
@@ -41,13 +41,13 @@
                         :key="index"
                         @click="filterProducts(category.value)"
                         :class="{
-              'bg-blue-500 text-white': activeFilter === category.value && category.value === 'plastico',
-              'bg-green-500 text-white': activeFilter === category.value && category.value === 'papel',
-              'bg-purple-500 text-white': activeFilter === category.value && category.value === 'vidrio',
-              'bg-orange-500 text-white': activeFilter === category.value && category.value === 'metal',
-              'bg-gray-500 text-white': activeFilter === category.value && category.value === 'all',
-              'bg-white text-gray-700': activeFilter !== category.value
-            }"
+                            'bg-blue-500 text-white': activeFilter === category.value && category.value === 'comedero',
+                            'bg-green-500 text-white': activeFilter === category.value && category.value === 'almacenaje',
+                            'bg-purple-500 text-white': activeFilter === category.value && category.value === 'basura',
+                            'bg-orange-500 text-white': activeFilter === category.value && category.value === 'jardin',
+                            'bg-gray-500 text-white': activeFilter === category.value && category.value === 'all',
+                            'bg-white text-gray-700': activeFilter !== category.value
+                        }"
                         class="px-4 py-2 rounded-full text-sm font-medium transition-all shadow-sm hover:shadow-md"
                     >
                         {{ category.label }}
@@ -78,21 +78,12 @@
                             :alt="product.name"
                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                         >
-                        <span :class="{
-              'bg-green-500': product.stock > 0,
-              'bg-red-500': product.stock === 0
-            }" class="absolute top-3 right-3 text-white text-xs px-2 py-1 rounded-full">
-              {{ product.stock > 0 ? `${product.stock} disponibles` : 'Agotado' }}
-            </span>
                     </div>
 
                     <!-- Detalles del producto -->
                     <div class="p-5">
                         <div class="flex justify-between items-start">
                             <h3 class="font-bold text-lg text-gray-800">{{ product.name }}</h3>
-                            <span class="bg-blue-100 text-blue-800 text-sm font-semibold px-2 py-1 rounded-full">
-                Q{{ product.price.toLocaleString('en-GT') }}
-              </span>
                         </div>
                         <p class="text-gray-600 text-sm mt-2">{{ product.description }}</p>
 
@@ -100,20 +91,19 @@
                         <div class="mt-3">
                             <p class="text-xs text-gray-500 font-medium">Hecho con:</p>
                             <div class="flex flex-wrap gap-1 mt-1">
-                <span
-                    v-for="(material, i) in product.materials"
-                    :key="i"
-                    class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700"
-                >
-                  {{ material }}
-                </span>
+                                <span
+                                    v-for="(material, i) in product.materials"
+                                    :key="i"
+                                    class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700"
+                                >
+                                    {{ material }}
+                                </span>
                             </div>
                         </div>
 
                         <!-- Botones -->
                         <div class="mt-4 flex justify-between items-center">
                             <button
-                                @click="addToCart(product)"
                                 :disabled="true"
                                 class="px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-300 text-gray-600 cursor-not-allowed"
                             >
@@ -146,7 +136,6 @@
                     </div>
 
                     <div class="md:flex">
-                        <!-- Imagen grande -->
                         <div class="md:w-1/2 p-6">
                             <img
                                 :src="selectedProduct.image"
@@ -159,7 +148,7 @@
                         <div class="md:w-1/2 p-6">
                             <div class="mb-6">
                                 <h4 class="font-semibold text-lg mb-2">Descripción</h4>
-                                <p class="text-gray-700">{{ selectedProduct.description }}</p>
+                                <p class="text-gray-700">{{ selectedProduct.longDescription || selectedProduct.description }}</p>
                             </div>
 
                             <div class="mb-6">
@@ -176,19 +165,26 @@
                                 </ul>
                             </div>
 
-                            <div class="mb-6">
+                            <div v-if="selectedProduct.bottlesUsed > 0" class="mb-6">
                                 <h4 class="font-semibold text-lg mb-2">Botellas recicladas utilizadas</h4>
                                 <div class="flex items-center bg-blue-50 p-3 rounded-lg">
                                     <i class="fas fa-wine-bottle text-blue-500 text-2xl mr-3"></i>
-                                    <span class="font-medium">{{ selectedProduct.bottlesUsed }} botellas recicladas</span>
+                                    <span class="font-medium">{{ selectedProduct.bottlesUsed }} botellas PET recicladas</span>
+                                </div>
+                            </div>
+
+                            <div v-if="selectedProduct.otherStats" class="mb-6">
+                                <h4 class="font-semibold text-lg mb-2">Impacto ambiental</h4>
+                                <div class="flex items-center bg-green-50 p-3 rounded-lg">
+                                    <i class="fas fa-leaf text-green-500 text-2xl mr-3"></i>
+                                    <span class="font-medium">{{ selectedProduct.otherStats }}</span>
                                 </div>
                             </div>
 
                             <div class="flex justify-between items-center border-t border-gray-200 pt-4">
-                                <span class="text-2xl font-bold text-blue-600">Q{{ selectedProduct.price.toLocaleString('en-GT') }}</span>
                                 <button
                                     :disabled="true"
-                                    class="px-6 py-3 rounded-lg font-medium transition-colors bg-gray-300 text-gray-600 cursor-not-allowed"
+                                    class="px-6 py-3 rounded-lg font-medium transition-colors bg-gray-300 text-gray-600 cursor-not-allowed w-full"
                                 >
                                     <i class="fas fa-clock mr-2"></i>
                                     Disponible próximamente
@@ -210,44 +206,66 @@ export default {
             products: [
                 {
                     id: 1,
-                    name: 'Eco-Lápices',
-                    description: 'Lápices ecológicos hechos con periódico reciclado y grafito natural. Ideal para oficinas y escuelas comprometidas con el medio ambiente.',
-                    price: 25.00,
-                    stock: 15,
-                    image: 'https://images.unsplash.com/photo-1585336261022-680e295ce3fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
-                    category: 'papel',
-                    materials: ['Periódico reciclado', 'Grafito natural', 'Adhesivo ecológico'],
-                    bottesUsed: 0
+                    name: 'Comedero para Mascotas',
+                    description: 'Diseño sostenible para alimentar a tus mascotas',
+                    longDescription: 'Comedero ecológico fabricado con plástico reciclado, ideal para perros y gatos. Su diseño ergonómico y materiales resistentes lo hacen perfecto para el uso diario, contribuyendo al cuidado del medio ambiente.',
+                    image: 'https://arcadenoe.com.gt/cdn/shop/products/361140.jpg?v=1614268847',
+                    category: 'comedero',
+                    materials: ['Plástico PET reciclado', 'Pigmentos naturales'],
+                    bottlesUsed: 4,
+                    otherStats: 'Ayuda a reducir residuos plásticos'
                 },
                 {
                     id: 2,
-                    name: 'Maceta PET',
-                    description: 'Maceta decorativa fabricada con botellas plásticas recicladas. Resistente a la intemperie y disponible en varios colores.',
-                    price: 80.00,
-                    stock: 8,
-                    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBlSUfKSuQjcMz_SI_HnhxXjYLPbTGgfVGvQ&s',
-                    category: 'plastico',
-                    materials: ['Botellas PET trituradas', 'Pintura ecológica', 'Base de madera reciclada'],
-                    bottesUsed: 3
+                    name: 'Caja de Almacenaje Multiusos',
+                    description: 'Solución ecológica para organizar tus espacios',
+                    longDescription: 'Caja de almacenaje fabricada con materiales reciclados, perfecta para mantener ordenado tu hogar u oficina. Versátil y resistente, con un diseño moderno que se adapta a cualquier ambiente.',
+                    image: 'https://cemacogt.vtexassets.com/arquivos/ids/711280-800-800?v=638439297538130000&width=800&height=800&aspect=true',
+                    category: 'almacenaje',
+                    materials: ['Cartón reciclado', 'Tela reciclada'],
+                    bottlesUsed: 0,
+                    otherStats: 'Promueve la economía circular'
                 },
                 {
                     id: 3,
-                    name: 'Porta-notas Vidrio',
-                    description: 'Organizador de escritorio fabricado con vidrio reciclado. Elegante y funcional, perfecto para mantener tu espacio de trabajo ordenado.',
-                    price: 120.00,
-                    stock: 5,
-                    image: 'https://http2.mlstatic.com/D_NQ_NP_877135-MLM82753896151_022025-O.webp',
-                    category: 'vidrio',
-                    materials: ['Vidrio molido', 'Resina ecológica', 'Base de corcho reciclado'],
-                    bottesUsed: 2
+                    name: 'Cubo de Basura Reciclado',
+                    description: 'Para una gestión responsable de residuos',
+                    longDescription: 'Cubo de basura fabricado con materiales reciclados, ideal para clasificar tus desechos. Diseño funcional y duradero que facilita el reciclaje en tu hogar o lugar de trabajo.',
+                    image: 'https://www.brabantia.com/cdn-cgi/image/format=auto,onerror=redirect/media/catalog/product/cache/80d68d1e74225849a505107b39a42815/8/0/800368_product_shot_back_01-web.jpg',
+                    category: 'basura',
+                    materials: ['Plástico reciclado', 'Acero recuperado'],
+                    bottlesUsed: 8,
+                    otherStats: 'Fabricado con materiales post-consumo'
+                },
+                {
+                    id: 4,
+                    name: 'Macetero de Jardín Ecológico',
+                    description: 'Para tus plantas con conciencia ambiental',
+                    longDescription: 'Macetero fabricado con materiales reciclados, perfecto para cultivar tus plantas favoritas. Diseño resistente a la intemperie que combina funcionalidad y sostenibilidad.',
+                    image: '/imagenes/macetas.png',
+                    category: 'jardin',
+                    materials: ['Caucho reciclado', 'Fibra natural'],
+                    bottlesUsed: 0,
+                    otherStats: 'Reutiliza materiales en desuso'
+                },
+                {
+                    id: 5,
+                    name: 'Comedero para Aves Silvestres',
+                    description: 'Atrae aves a tu jardín de manera sostenible',
+                    longDescription: 'Comedero para aves fabricado con madera recuperada y materiales ecológicos. Diseñado para resistir las condiciones climáticas mientras proporciona alimento a las aves locales.',
+                    image: '/imagenes/aves2.webp',
+                    category: 'comedero',
+                    materials: ['Madera reciclada', 'Metal recuperado'],
+                    bottlesUsed: 0,
+                    otherStats: 'Promueve la biodiversidad urbana'
                 }
             ],
             categories: [
                 { label: 'Todos', value: 'all' },
-                { label: 'Plástico', value: 'plastico' },
-                { label: 'Papel', value: 'papel' },
-                { label: 'Vidrio', value: 'vidrio' },
-                { label: 'Metal', value: 'metal' }
+                { label: 'Comederos', value: 'comedero' },
+                { label: 'Almacenaje', value: 'almacenaje' },
+                { label: 'Cubos de Basura', value: 'basura' },
+                { label: 'Jardín', value: 'jardin' }
             ],
             activeFilter: 'all',
             searchQuery: '',
@@ -269,6 +287,7 @@ export default {
                 filtered = filtered.filter(p =>
                     p.name.toLowerCase().includes(query) ||
                     p.description.toLowerCase().includes(query) ||
+                    (p.longDescription && p.longDescription.toLowerCase().includes(query)) ||
                     p.materials.some(m => m.toLowerCase().includes(query))
                 );
             }
@@ -282,13 +301,11 @@ export default {
         },
         openProductModal(product) {
             this.selectedProduct = product;
-        },
-        addToCart() {
-
         }
     }
 }
 </script>
+
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans:wght@400;600&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
